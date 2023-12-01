@@ -1,18 +1,27 @@
-import json
-from src.classes.ingredients import Ingredients
 from src.classes.recipe import Recipe
 
 
-ingredients = Ingredients()
+recipe_list = []
 recipe = Recipe()
+ingredients = recipe.list_ingredients()
 
-ingredient_list = []
+recipe_remainder = 0.2
 
-recipe.add_ingredient(ingredients.get_ingredient("Canola Oil", percentage=0.5))
-recipe.add_ingredient(ingredients.get_ingredient("Baobab Oil", percentage=0.5))
+recipe_list.append(recipe.get_ingredient("Canola Oil", percentage=0.4))
+recipe_list.append(recipe.get_ingredient("Almond Butter", percentage=0.4))
 
-total = recipe.sum_recipe()
+list_sum = recipe.sum_recipe(recipe_list)
 
-print(total)
+for ingredient in ingredients:
+    recommendations = []
+
+    curr_ingredient = recipe.get_ingredient(ingredient, recipe_remainder)
+    if list_sum['oleic'] + curr_ingredient['oleic'] <= 48.0:
+        recommendations.append(ingredient)
+        print(curr_ingredient['name'])
+
+
+
+
 
 

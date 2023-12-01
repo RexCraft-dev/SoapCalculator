@@ -16,6 +16,24 @@ class Ingredients:
         except Exception as e:
             print(f'An unexpected error occurred: {e}')
 
+        self.ing = None
+        self.percentage = 1.0
+        self.name = None
+        self.ofw_values = None
+        self.ofw_val_int = None
+
+    def set_percentage(self, n):
+        self.percentage = n
+
+    def check_available(self, item):
+        try:
+            for ing in self.data:
+                if ing['name'] == item:
+                    return True
+        except Exception as e:
+            print(f"Ingredient not found: {e}")
+        return False
+
     def get_ingredient(self, name, percentage=1.0):
         try:
             for ing, n in enumerate(self.data):
@@ -29,3 +47,11 @@ class Ingredients:
                     return weighted_ingredient
         except FileNotFoundError:
             print('ERROR: File not Found')
+        except AttributeError as e:
+            print(f'ERROR: {e} not found')
+
+    def list_ingredients(self) -> list:
+        ingredient_names = []
+        for i, val in enumerate(self.data):
+            ingredient_names.append(self.data[i]['name'])
+        return ingredient_names
